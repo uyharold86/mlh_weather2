@@ -29,7 +29,7 @@ export default function Home({transactions, rawFileContents}) {
     return (
         <div className="container">
             <Head>
-                <title>Major League Banking</title>
+                <title>MLH Forecasting</title>
                 <link rel="icon" href="/favicon.ico"/>
                 <link rel="preconnect" href="https://fonts.gstatic.com"/>
                 <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet"/>
@@ -40,9 +40,9 @@ export default function Home({transactions, rawFileContents}) {
             <main>
                 <header>
                     <h1>
-                        <span className="header-title-red">Major</span>
-                        <span className="header-title-blue">League</span>
-                        <span className="header-title-yellow">Banking</span>
+                        <span className="header-title-red">MLH</span>
+                        <span className="header-title-blue">Weather</span>
+                        <span className="header-title-yellow">App</span>
                     </h1>
                 </header>
                 <div className="transactions">
