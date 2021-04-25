@@ -1,8 +1,37 @@
 import Head from 'next/head'
 
+export async function getServerSideProps() {
+  // https://api.openweathermap.org/data/2.5/onecall?lat=10.316870289959768&lon=123.89034075926665&exclude=hourly,minutely&appid=c66c733779f81fe1e75bb9dc3190cb87&units=metric
+  //JavaScript URL manipulation
 
-export default function Home() {
-    
+    const baseURL = "https://api.openweathermap.org/data/2.5/onecall";
+    const searchParams = new URLSearchParams();
+
+    const apiOptions = {
+        lat: "51.5013715344381",
+        lon: "-0.14184897815474495",
+        apiKey: "c66c733779f81fe1e75bb9dc3190cb87",
+        units: "metric",
+        exclude: "hourly,minutely"
+    }
+
+    for (const [key, value] of Object.entries(apiOptions)) {
+        searchParams.set(key, value);
+    }
+
+    const apiRoute = `${baseURL}?${searchParams.toString()}`;
+    console.log(apiRoute);
+
+    // Fetch data from external API
+    const res = await fetch(apiRoute);
+    const data = await res.json();
+
+    // Pass data to the page via props
+    return { props: { data } }
+}
+
+export default function Home({ data }) {
+    console.log(data);
     return (
         <div className="container">
             <Head>
