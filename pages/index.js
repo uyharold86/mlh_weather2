@@ -1,5 +1,19 @@
 import Head from 'next/head'
 
+function convertDayNumberToWord(dayNumber) {
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+    
+  ];
+  return days[dayNumber];
+}
+
 export async function getServerSideProps() {
   // https://api.openweathermap.org/data/2.5/onecall?lat=10.316870289959768&lon=123.89034075926665&exclude=hourly,minutely&appid=c66c733779f81fe1e75bb9dc3190cb87&units=metric
   //JavaScript URL manipulation
@@ -8,8 +22,8 @@ export async function getServerSideProps() {
     const searchParams = new URLSearchParams();
 
     const apiOptions = {
-        lat: "51.5013715344381",
-        lon: "-0.14184897815474495",
+        lat: "10.316918868696487",
+        lon: "123.89029542887974",
         apiKey: "c66c733779f81fe1e75bb9dc3190cb87",
         units: "metric",
         exclude: "hourly,minutely"
@@ -24,14 +38,14 @@ export async function getServerSideProps() {
 
     // Fetch data from external API
     const res = await fetch(apiRoute);
-    const data = await res.json();
+    const weather = await res.json();
 
     // Pass data to the page via props
-    return { props: { data } }
+    return { props: { weather } }
 }
 
-export default function Home({ data }) {
-    console.log(data);
+export default function Home({ weather }) {
+    console.log(weather);
     return (
         <div className="container">
             <Head>
@@ -52,7 +66,14 @@ export default function Home({ data }) {
                     </h1>
                 </header>
                 <div className="transactions">
-                    
+                    {weather.daily.map(forecast => (
+                      <Forecast
+                        day={ convertDayNumberToWord(new Date(forecast.dt *1000).getDay())}
+                        minTemp={forecast.temp.min}
+                        maxTemp={forecast.temp.max}
+                        weather={forecast.weather[0].main}
+                      />
+                    ))}
                 </div>
             </main>
 
@@ -132,20 +153,20 @@ export default function Home({ data }) {
     )
 }
 
-function Transaction({date, amount, merchant}) {
+function Forecast({day, minTemp, maxTemp, weather}) {
     return (
         <>
-            <div className={["transaction", amount >= 0 ? "income" : "expense"].join(" ")}>
-                <div className="merchant">{merchant}</div>
-                <div className="date">{date}</div>
-                <div className="amount">{amount.toFixed(2)}</div>
+            <div className="transaction">
+                <div className="day">{day}</div>
+                <div className="temp">min {minTemp} | max {maxTemp} </div>
+                <div className="weather">{weather}</div>
             </div>
 
             <style jsx>{`
                 .transaction {
                     display: grid;
-                    grid-template-areas: "merchant amount"
-                                         "date     amount";
+                    grid-template-areas: "day weather"
+                                         "temp weather";
                     grid-template-columns: 1fr 100px;
                     text-align: left;
                     position: relative;
@@ -172,18 +193,18 @@ function Transaction({date, amount, merchant}) {
                     background: #fcf3f3;
                 }
                 
-                .merchant {
-                    grid-area: merchant;
+                .day {
+                    grid-area: day;
                     padding: 12px 6px 3px 16px;
                 }
                 
-                .date {
-                    grid-area: date;
+                .temp {
+                    grid-area: temp;
                     padding: 3px 6px 12px 16px;
                 }
                 
-                .amount {
-                    grid-area: amount;
+                .weather {
+                    grid-area: weather;
                     display: flex;
                     align-items: center;
                     justify-content: flex-end;
