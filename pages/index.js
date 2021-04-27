@@ -168,6 +168,10 @@ function Forecast({day, minTemp, maxTemp, weather}) {
                     grid-template-columns: 1fr 100px;
                     text-align: left;
                     position: relative;
+                    width: 100vw;
+                }
+                .forecast:nth-child(2n) { //2n alternates the colors for the css background
+                  background: #2292ac;
                 }
                 
                 .forecast::after {
@@ -185,11 +189,12 @@ function Forecast({day, minTemp, maxTemp, weather}) {
                 .day {
                     grid-area: day;
                     padding: 12px 6px 3px 16px;
+                    font-weight:600;
                 }
                 
                 .temp {
                     grid-area: temp;
-                    padding: 3px 6px 12px 16px;
+                    padding: 3px 6px 12px 36px;
                 }
                 
                 .weather {
@@ -197,7 +202,7 @@ function Forecast({day, minTemp, maxTemp, weather}) {
                     display: flex;
                     align-items: center;
                     justify-content: flex-end;
-                    padding: 6px 16px 6px 6px;
+                    padding: 6px 36px 6px 6px;
                     font-family: 'Roboto Mono', monospace;
                     font-weight: 600;
                 }
@@ -218,7 +223,7 @@ function WeatherIcon({ weatherCode, weatherDescription }) {
         />
         <style jsx>{`
             .weather-icon {
-                width: 80px;
+                width: 50px;
             }            
         `}</style>
     </>
