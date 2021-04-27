@@ -59,7 +59,7 @@ export default function Home({ weather }) {
                         day={forecast.dt}
                         minTemp={forecast.temp.min}
                         maxTemp={forecast.temp.max}
-                        weather={forecast.weather[0].main}
+                        weather={forecast.weather[0]}
                         key={forecast.dt}
                       />
                     ))}
@@ -119,7 +119,7 @@ export default function Home({ weather }) {
                 background: #fafafa;
                 border-radius: 5px;
                 padding: 0.75rem;
-                font-size: 1.1rem;
+                font-size: 1. 1rem;
                 font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
                 DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
               }
@@ -132,6 +132,10 @@ export default function Home({ weather }) {
                 padding: 0;
                 margin: 0;
                 
+              }
+
+              body {
+                background: #94e0f1;
               }
 
               * {
@@ -148,7 +152,12 @@ function Forecast({day, minTemp, maxTemp, weather}) {
             <div className="forecast">
                 <div className="day">{convertDayNumberToWord(new Date(day * 1000).getDay())}</div>
                 <div className="temp">min {formatTemp(minTemp)} | max {formatTemp(maxTemp)} </div>
-                <div className="weather">{weather}</div>
+                <div className="weather">
+                    <WeatherIcon
+                        weatherCode={weather.icon}
+                        weatherDescription={weather.description}
+                    />
+                </div>
             </div>
 
             <style jsx>{`
@@ -172,7 +181,6 @@ function Forecast({day, minTemp, maxTemp, weather}) {
                     bottom: 0;
                 }
                 
-                }
                 
                 .day {
                     grid-area: day;
@@ -193,7 +201,26 @@ function Forecast({day, minTemp, maxTemp, weather}) {
                     font-family: 'Roboto Mono', monospace;
                     font-weight: 600;
                 }
+                
             `}</style>
         </>
     )
+}
+
+function WeatherIcon({ weatherCode, weatherDescription }) {
+  return (
+    <>
+        <img
+            src={`https://openweathermap.org/img/wn/${weatherCode}@2x.png`}
+            alt={weatherDescription}
+            title={weatherDescription}
+            className="weather-icon"
+        />
+        <style jsx>{`
+            .weather-icon {
+                width: 80px;
+            }            
+        `}</style>
+    </>
+)
 }
