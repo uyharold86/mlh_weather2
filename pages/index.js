@@ -1,18 +1,6 @@
 import Head from 'next/head'
+import {convertDayNumberToWord, formatTemp} from '../components/utils'
 
-function convertDayNumberToWord(dayNumber) {
-  const days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday"
-    
-  ];
-  return days[dayNumber];
-}
 
 export async function getServerSideProps() {
   // https://api.openweathermap.org/data/2.5/onecall?lat=10.316870289959768&lon=123.89034075926665&exclude=hourly,minutely&appid=c66c733779f81fe1e75bb9dc3190cb87&units=metric
@@ -158,7 +146,7 @@ function Forecast({day, minTemp, maxTemp, weather}) {
         <>
             <div className="transaction">
                 <div className="day">{day}</div>
-                <div className="temp">min {minTemp.toFixed(0)}°C | max {maxTemp.toFixed(0)}°C </div>
+                <div className="temp">min {formatTemp(minTemp)} | max {formatTemp(maxTemp)} </div>
                 <div className="weather">{weather}</div>
             </div>
 
