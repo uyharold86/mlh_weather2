@@ -158,7 +158,7 @@ function Forecast({day, minTemp, maxTemp, weather}) {
         <>
             <div className="transaction">
                 <div className="day">{day}</div>
-                <div className="temp">min {minTemp} | max {maxTemp} </div>
+                <div className="temp">min {minTemp.toFixed(0)}°C | max {maxTemp.toFixed(0)}°C </div>
                 <div className="weather">{weather}</div>
             </div>
 
