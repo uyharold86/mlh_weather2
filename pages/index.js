@@ -56,7 +56,7 @@ export default function Home({ weather }) {
                 <div className="transactions">
                     {weather.daily.map(forecast => (
                       <Forecast
-                        day={ convertDayNumberToWord(new Date(forecast.dt *1000).getDay())}
+                        day={forecast.dt}
                         minTemp={forecast.temp.min}
                         maxTemp={forecast.temp.max}
                         weather={forecast.weather[0].main}
@@ -144,9 +144,9 @@ export default function Home({ weather }) {
 
 function Forecast({day, minTemp, maxTemp, weather}) {
     return (
-        <>
+        <> 
             <div className="transaction">
-                <div className="day">{day}</div>
+                <div className="day">{convertDayNumberToWord(new Date(day * 1000).getDay())}</div>
                 <div className="temp">min {formatTemp(minTemp)} | max {formatTemp(maxTemp)} </div>
                 <div className="weather">{weather}</div>
             </div>
