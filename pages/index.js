@@ -145,14 +145,14 @@ export default function Home({ weather }) {
 function Forecast({day, minTemp, maxTemp, weather}) {
     return (
         <> 
-            <div className="transaction">
+            <div className="forecast">
                 <div className="day">{convertDayNumberToWord(new Date(day * 1000).getDay())}</div>
                 <div className="temp">min {formatTemp(minTemp)} | max {formatTemp(maxTemp)} </div>
                 <div className="weather">{weather}</div>
             </div>
 
             <style jsx>{`
-                .transaction {
+                .forecast {
                     display: grid;
                     grid-template-areas: "day weather"
                                          "temp weather";
@@ -161,7 +161,7 @@ function Forecast({day, minTemp, maxTemp, weather}) {
                     position: relative;
                 }
                 
-                .transaction::after {
+                .forecast::after {
                     content: '';
                     display: block;
                     height: 2px;
@@ -172,14 +172,6 @@ function Forecast({day, minTemp, maxTemp, weather}) {
                     bottom: 0;
                 }
                 
-                .transaction.income {
-                    color: #2d6200;
-                    background: #e9fae9;
-                }
-                
-                .transaction.expense {
-                    color: #430707;
-                    background: #fcf3f3;
                 }
                 
                 .day {
